@@ -33,3 +33,12 @@ const readFile = () => fs.readFile("./txt/start.txt", "utf-8", (err, fileName) =
 
 // readFileSync();
 // readFile();
+const createServer = () => {
+  http.createServer((req, res) => {
+    res.end("Hello from the server!");
+  }).listen(8000, "127.0.0.2", () => {
+    console.log("Listening to requests on port 8000");
+  });
+};
+
+createServer();
