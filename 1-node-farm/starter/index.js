@@ -34,6 +34,9 @@ const readFile = () => fs.readFile("./txt/start.txt", "utf-8", (err, fileName) =
 
 // readFileSync();
 // readFile();
+
+const productData = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+
 const createServer = () => {
   http.createServer((req, res) => {
     // res.end("Hello from the server!");
@@ -42,6 +45,9 @@ const createServer = () => {
       res.end("This is the overview");
     } else if (pathName === "/product") {
       res.end("This is the product");
+    } else if (pathName === "/api") {
+      res.writeHead(200, { "Content-type": "application/json" });
+      res.end(productData);
     } else {
       res.writeHead(404, { "Content-type": "text/html" });
       res.end("<h1>Page not found</h1>");
