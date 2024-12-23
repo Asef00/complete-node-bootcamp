@@ -10,6 +10,7 @@ const fs = require("fs");
 
 //non-blocking code
 fs.readFile("./txt/start.txt", "utf-8", (err, fileName) => {
+  if (err) return console.log("Error reading file");
   console.log("File name:", fileName);
 
   fs.readFile(`./txt/${fileName}.txt`, "utf-8", (err, mainContext) => {
