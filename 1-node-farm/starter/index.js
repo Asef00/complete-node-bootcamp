@@ -1,7 +1,7 @@
 const fs = require("fs");
 const http = require("http");
 const url = require("url");
-
+const replaceTemplate = require("./modules/replaceTemplate");
 //blocking code
 const readFileSync = () => {
   const textIn = fs.readFileSync("./txt/input.txt", "utf-8");
@@ -42,19 +42,6 @@ const cardTemplate = fs.readFileSync(`${__dirname}/templates/template-card.html`
 
 const dataObj = JSON.parse(productData);
 
-const replaceTemplate = (temp, product) => {
-  let output = temp.replace(/{{product.name}}/g, product.name);
-  output = output.replace(/{{product.image}}/g, product.image);
-  output = output.replace(/{{product.price}}/g, product.price);
-  output = output.replace(/{{product.from}}/g, product.from);
-  output = output.replace(/{{product.nutrients}}/g, product.nutrients);
-  output = output.replace(/{{product.quantity}}/g, product.quantity);
-  output = output.replace(/{{product.description}}/g, product.description);
-  output = output.replace(/{{product.unit}}/g, product.unit);
-  output = output.replace(/{{product.organic}}/g, !product.organic ? 'not-organic' : '');
-  output = output.replace(/{{product.id}}/g, product.id);
-  return output;
-};
 
 const createServer = () => {
   http.createServer((req, res) => {
