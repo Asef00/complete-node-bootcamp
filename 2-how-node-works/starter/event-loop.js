@@ -1,4 +1,8 @@
 const fs = require('fs')
+const crypto = require('crypto')
+
+const start = Date.now()
+process.env.UV_THREADPOOL_SIZE = 4
 
 setTimeout(() => {
   console.log('setTimeout 1')
@@ -9,6 +13,14 @@ setImmediate(() => {
 })
 
 console.log('top level')
+
+const encode = (times) => {
+  for (let i = 0; i < times; i++) {
+    crypto.pbkdf2('password', 'salt', 100000, 1024, 'sha512', () => {
+      console.log(Date.now() - start, 'crypto')
+    })
+  }
+}
 
 fs.readFile('./test-file.txt', () => {
   console.log('File read')
@@ -27,6 +39,8 @@ fs.readFile('./test-file.txt', () => {
   process.nextTick(() => {
     console.log('process.nextTick')
   })
+
+  encode(5)
 })
 
 setTimeout(() => {
